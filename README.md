@@ -2,7 +2,7 @@
 
 ## Compressive axial-integrated planar scanning (CAPS) microscopy for high-speed volumetric imaging of cardiac dynamics
 
-This repository contains reconstruction and post-processing code for **compressive axial-integrated planar scanning (CAPS) microscopy**, a compressed sensing framework for high-speed volumetric fluorescence imaging. CAPS combines detection-side optical multiplexing with model-based reconstruction to recover volumetric image sequences from compressed measurements, enabling efficient imaging of fast biological dynamics such as the beating heart.
+This repository contains reconstruction and post-processing code for **compressive axial-integrated planar scanning (CAPS) microscopy**, a compressed sensing framework for high-speed volumetric fluorescence imaging. 
 
 The reconstruction workflow is built around a **Plug-and-Play Alternating Direction Method of Multipliers (PnP-ADMM)** framework, and the post-processing pipeline includes rolling-shutter calibration, reslicing, sine-based interpolation, and volume splitting.
 
@@ -179,10 +179,3 @@ If you use this code in your research, please cite:
 **Xinyuan Zhang et al.**  
 *Compressive axial-integrated planar scanning (CAPS) microscopy for high-speed volumetric imaging of cardiac dynamics.*
 
-You can also add the bioRxiv citation here once the preprint link is available.
-
----
-
-## Contact
-
-For questions about the code or CAPS microscopy, please contact the repository author.
