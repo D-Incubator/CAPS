@@ -1,38 +1,190 @@
-# CS-LSM
+# CAPS
 
-## Project Description
-This project implements a Plug-and-Play Alternating Direction Method of Multipliers (PnP-ADMM) algorithm for image reconstruction from compressed sensing measurements captured by our customized compressed sensing enhanced light-sheet microscope (CS-LSM). 
+## Compressive axial-integrated planar scanning (CAPS) microscopy for high-speed volumetric imaging of cardiac dynamics
 
-## References
-- Venkatakrishnan, S. V., Bouman, C. A., & Wohlberg, B. (2016). Plug-and-play priors for model based reconstruction. *IEEE Global Conference on Signal and Information Processing (GlobalSIP)*. [Link to Paper](https://ieeexplore.ieee.org/document/7744574)
-- Yuan, X., Liu, Y., Suo, J., & Dai, Q. (2020). *Plug-and-Play Algorithms for Large-Scale Snapshot Compressive Imaging*. Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR), pp. 1444–1454. [Link to Paper](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=9156491)
+This repository contains the reconstruction and post-processing code for **compressive axial-integrated planar scanning (CAPS) microscopy**, a compressed sensing framework for high-speed volumetric fluorescence imaging. CAPS combines detection-side optical encoding with model-based reconstruction to recover volumetric dynamics from compressed measurements, enabling rapid 4D imaging of cardiac motion and flow.
 
-## Setup Instructions
+The reconstruction pipeline is based on a **Plug-and-Play Alternating Direction Method of Multipliers (PnP-ADMM)** framework, and the repository also includes post-processing tools for rolling-shutter calibration, reslicing, sine-based interpolation, and volume splitting.
 
-### 1. Download Project Files and data
-- Download all files in this project repository to your local system.
-- Download data [here](https://cometmail-my.sharepoint.com/:f:/g/personal/xxz210006_utdallas_edu/ElB5h9w2YupKpZrT6fEYbNoBR5lAPcF0iJJ6MsnlzFzrXw?e=kJvc2l) to your local system.
+A bioRxiv preprint of the associated paper is available here:  
+**[Add bioRxiv link here]**
 
-### 2. Install the Python Environment
-- Download and install [Anaconda](https://www.anaconda.com/products/distribution).
-- Create the required environment by running:
-  ```bash
-  conda env create -f cs_lsm.yml
-  ```
-- Activate the environment with:
-  ```bash
-  conda activate cs_lsm
-  ```
+---
 
-### 3. Configure Input Data
-- Set up the input data paths by editing lines 15-27 in `cs_lsm_simu_092924.py`.
+## Repository Contents
 
-### 4. Adjust Reconstruction Parameters
-- Configure the reconstruction parameters on lines 64-71 in `cs_lsm_simu_092924.py` as needed.
+The main files in this repository are:
 
-### 5. Run the Code
-- Execute the script to run the reconstruction:
-  ```bash
-  python cs_lsm_simu_092924.py
-  ```
-- Check the output files in the `results` folder.
+- `caps_main.py`  
+  Main reconstruction script. Edit the input and output paths directly in the script, then run the CAPS reconstruction.
+
+- `caps_reconstruction.py`  
+  Core PnP-ADMM reconstruction functions and denoising routines.
+
+- `caps_tools.py`  
+  Utility functions for TIFF I/O, result saving, and CAPS forward/adjoint operators.
+
+- `test_data.tif`  
+  Example compressed CAPS measurement data for testing the reconstruction workflow.
+
+- `test_mask.tif`  
+  Example coding mask corresponding to the test data.
+
+- `pipeline_run.py`  
+  Main post-processing pipeline script for rolling-shutter calibration and downstream volume processing.
+
+- `pipeline_functions.py`  
+  Functions used by the post-processing pipeline.
+
+- `caps_env.yml`  
+  Conda environment file for reproducing the software environment used by this project.
+
+---
+
+## Folder Organization
+
+Place all repository files in the **same folder**. A typical layout is:
+
+```text
+CAPS/
+├── caps_main.py
+├── caps_reconstruction.py
+├── caps_tools.py
+├── pipeline_run.py
+├── pipeline_functions.py
+├── caps_env.yml
+├── test_data.tif
+├── test_mask.tif
+└── README.md
+```
+
+This repository is set up so that the example code can be run by editing file paths directly in the scripts.
+
+---
+
+## Setup
+
+### 1. Download the repository files
+Download or clone all repository files to your local machine and keep them in the same folder.
+
+### 2. Create the Python environment
+We recommend using Anaconda or Miniconda.
+
+Create the environment using:
+
+```bash
+conda env create -f caps_env.yml
+```
+
+Activate the environment using:
+
+```bash
+conda activate caps
+```
+
+---
+
+## Reconstruction Workflow
+
+### 1. Configure input and output paths
+Open `caps_main.py` and edit the user settings section near the top of the file. Set:
+
+- `DATA_PATH`
+- `MASK_PATH`
+- `OUTPUT_DIR`
+- optionally `ORIG_PATH` if ground truth is available
+
+For a quick test, you can point the script to the included example files:
+
+```python
+DATA_PATH = Path("test_data.tif")
+MASK_PATH = Path("test_mask.tif")
+OUTPUT_DIR = Path(".")
+```
+
+If all files are placed in the same folder, these relative paths are sufficient.
+
+### 2. Adjust reconstruction parameters
+In `caps_main.py`, you can customize reconstruction settings such as:
+
+- initial frame index
+- number of frames to reconstruct
+- denoiser type
+- number of ADMM iterations
+- TV weight
+- ADMM penalty parameter `rho`
+- sequential or parallel execution
+
+### 3. Run the reconstruction
+Execute:
+
+```bash
+python caps_main.py
+```
+
+The reconstructed result will be saved to the output directory specified in the script.
+
+---
+
+## Post-processing Workflow
+
+After reconstruction, you can run the post-processing pipeline to perform rolling-shutter calibration and subsequent processing.
+
+### 1. Configure `pipeline_run.py`
+Open `pipeline_run.py` and set the reconstruction result path.
+
+The current version is configured so that the **default start frame for the test data is 42**, while still allowing this value to be customized if needed.
+
+### 2. Run the pipeline
+Execute:
+
+```bash
+python pipeline_run.py
+```
+
+This pipeline performs the following steps:
+
+1. rolling-shutter simulation  
+2. rolling-shutter calibration  
+3. reslicing for camera-scanning mismatch  
+4. sine-based z interpolation  
+5. volume splitting  
+
+Processed outputs will be written to the same folder as the reconstruction result unless otherwise specified in the script.
+
+---
+
+## Example Data
+
+This repository includes example files for testing the workflow:
+
+- `test_data.tif`
+- `test_mask.tif`
+
+These files are intended to help verify that the reconstruction code and post-processing pipeline run correctly on a local system.
+
+---
+
+## Notes
+
+- The code is designed for TIFF-based CAPS data.
+- Paths are configured directly inside the Python scripts rather than passed through the command line.
+- Depending on dataset size and hardware, reconstruction may require substantial computation time and memory.
+- For reproducibility, we recommend using the provided `caps_env.yml` environment file.
+
+---
+
+## Citation
+
+If you use this code in your research, please cite:
+
+**Xinyuan Zhang et al.**  
+*Compressive axial-integrated planar scanning (CAPS) microscopy for high-speed volumetric imaging of cardiac dynamics.*
+
+Please also add the bioRxiv citation once the preprint link is available.
+
+---
+
+## Contact
+
+For questions regarding the code, data, or CAPS microscopy workflow, please contact the repository author.
