@@ -2,9 +2,9 @@
 
 ## Compressive axial-integrated planar scanning (CAPS) microscopy for high-speed volumetric imaging of cardiac dynamics
 
-This repository contains reconstruction and post-processing code for **compressive axial-integrated planar scanning (CAPS) microscopy**, a compressed sensing framework for high-speed volumetric fluorescence imaging. 
+This repository contains acquisition, reconstruction, and post-processing code for **compressive axial-integrated planar scanning (CAPS) microscopy**, a compressed sensing framework for high-speed volumetric fluorescence imaging. CAPS combines detection-side optical multiplexing with model-based reconstruction to recover volumetric image sequences from compressed measurements, enabling efficient imaging of fast biological dynamics such as the beating heart.
 
-The reconstruction workflow is built around a **Plug-and-Play Alternating Direction Method of Multipliers (PnP-ADMM)** framework, and the post-processing pipeline includes rolling-shutter calibration, reslicing, sine-based interpolation, and volume splitting.
+The computational workflow is built around a **Plug-and-Play Alternating Direction Method of Multipliers (PnP-ADMM)** reconstruction framework, followed by post-processing steps for rolling-shutter calibration, reslicing, sine-based interpolation, and volume splitting. In addition to the Python reconstruction pipeline, this repository also includes a **LabVIEW acquisition program** for hardware control during CAPS data acquisition.
 
 A preprint of the associated paper is available on bioRxiv:  
 **[Add bioRxiv link here]**
@@ -16,6 +16,8 @@ A preprint of the associated paper is available on bioRxiv:
 ```text
 CAPS/
 ├── caps_env.yml
+├── acquisition/
+│   └── CAPS_acquisition.vi
 ├── recon_scripts/
 │   ├── caps_main.py
 │   ├── caps_reconstruction.py
@@ -34,6 +36,12 @@ CAPS/
 ### Environment file
 - `caps_env.yml`  
   Conda environment file for creating the recommended Python environment.
+
+### Acquisition code
+Located in the `acquisition/` folder:
+
+- `CAPS_acquisition.vi`  
+  LabVIEW program for CAPS hardware control during data acquisition.
 
 ### Reconstruction scripts
 Located in the `recon_scripts/` folder:
@@ -159,15 +167,17 @@ The repository includes example files in the `examples/` folder:
 - `examples/test_data.tif`
 - `examples/test_mask.tif`
 
-These data were acquired from the CAPS hardware, capturing the _in vivo_ heart of a 3 dpf _Tg(myl7:nucGFP)_ zebrafish larva. They can be used to test the reconstruction workflow after updating the paths in `recon_scripts/caps_main.py`.
+These files can be used directly to test the reconstruction workflow after updating the paths in `recon_scripts/caps_main.py`.
 
 ---
 
 ## Notes
 
+- The reconstruction code is designed for TIFF-based CAPS data.
 - Input and output paths are configured directly inside the Python scripts.
 - The example files are intended for demonstration and validation of the workflow.
 - Runtime and memory usage depend on dataset size and reconstruction settings.
+- The LabVIEW acquisition code is included for instrument control and is separate from the Python reconstruction and post-processing workflow.
 
 ---
 
@@ -178,3 +188,10 @@ If you use this code in your research, please cite:
 **Xinyuan Zhang et al.**  
 *Compressive axial-integrated planar scanning (CAPS) microscopy for high-speed volumetric imaging of cardiac dynamics.*
 
+You can also add the bioRxiv citation here once the preprint link is available.
+
+---
+
+## Contact
+
+For questions about the code or CAPS microscopy, please contact the repository author.
