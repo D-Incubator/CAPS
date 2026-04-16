@@ -159,13 +159,12 @@ The repository includes example files in the `examples/` folder:
 - `examples/test_data.tif`
 - `examples/test_mask.tif`
 
-These files can be used directly to test the reconstruction workflow after updating the paths in `recon_scripts/caps_main.py`.
+These data were acquired from the CAPS hardware, capturing the _in vivo_ heart dynamics of a 3 dpf _Tg(myl7:nucGFP)_ zebrafish larva. They can be used directly to test the reconstruction workflow after updating the paths in `recon_scripts/caps_main.py`.
 
 ---
 
 ## Notes
 
-- The reconstruction code is designed for TIFF-based CAPS data.
 - Input and output paths are configured directly inside the Python scripts.
 - The example files are intended for demonstration and validation of the workflow.
 - Runtime and memory usage depend on dataset size and reconstruction settings.
