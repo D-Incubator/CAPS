@@ -17,7 +17,14 @@ placeholder
 CAPS/
 ├── caps_env.yml
 ├── acquisition/
-│   └── CAPS_acquisition.vi
+│   ├── image_acquisition.vi
+│   ├── find_optimal_control_parameters.vi
+│   ├── camera_config.vi
+│   ├── control_laser.vi
+│   ├── galvo_ETL_offset_config.vi
+│   ├── generate_analogue_out_waveform.vi
+│   ├── MATLAB_helper.vi
+│   └── dcimg_to_tif.vi
 ├── recon_scripts/
 │   ├── caps_main.py
 │   ├── caps_reconstruction.py
@@ -40,8 +47,13 @@ CAPS/
 ### Acquisition code
 Located in the `acquisition/` folder:
 
-- `CAPS_acquisition.vi`  
+- `image_acquisition.vi`  
   LabVIEW program for CAPS hardware control during data acquisition.
+
+- `find_optimal_control_parameters.vi`  
+  LabVIEW program for finding optimal control parameters of CAPS hardware.
+
+*Note: The rest are internal functions encapsulated in this directory.*
 
 ### Reconstruction scripts
 Located in the `recon_scripts/` folder:
