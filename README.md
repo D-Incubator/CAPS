@@ -53,7 +53,7 @@ Located in the `acquisition/` folder:
 - `find_optimal_control_parameters.vi`  
   LabVIEW program for finding optimal control parameters of CAPS hardware.
 
-*Note: The rest are internal functions encapsulated in this directory.*
+*Note: The rest are internal functions.*
 
 ### Reconstruction scripts
 Located in the `recon_scripts/` folder:
