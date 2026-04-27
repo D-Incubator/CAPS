@@ -7,7 +7,7 @@ This repository contains acquisition, reconstruction, and post-processing code f
 The computational workflow is built around a **Plug-and-Play Alternating Direction Method of Multipliers (PnP-ADMM)** reconstruction framework, followed by post-processing steps for rolling-shutter calibration, reslicing, sine-based interpolation, and volume splitting. In addition to the Python reconstruction pipeline, this repository also includes a **LabVIEW acquisition program** for hardware control during CAPS data acquisition.
 
 A preprint of the associated paper is available on bioRxiv:  
-placeholder
+[CAPS](https://doi.org/10.64898/2026.04.21.720045)
 
 ---
 
